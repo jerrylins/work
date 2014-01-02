@@ -1,0 +1,8 @@
+#! /bin/sh
+
+echo $1
+sudo ~/bin/upgrade_tool sd
+
+sleep 2
+
+sudo ~/bin/upgrade_tool uf  $1

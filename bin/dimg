@@ -1,0 +1,10 @@
+#! /bin/sh
+sudo ~/bin/upgrade_tool sd
+sleep 5
+sudo ~/bin/upgrade_tool di -k kernel.img  ../parameter
+#sudo ~/bin/upgrade_tool di -m ../rockdev/Image/misc.img  ../parameter 
+sudo ~/bin/upgrade_tool di -b ../rockdev/Image/boot.img  ../parameter
+sudo ~/bin/upgrade_tool di -r ../rockdev/Image/recovery.img  ../parameter
+sudo ~/bin/upgrade_tool di -s ../rockdev/Image/system.img  ../parameter 
+sleep 1
+sudo ~/bin/upgrade_tool rd

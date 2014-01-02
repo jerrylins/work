@@ -1,0 +1,7 @@
+#! /bin/bash
+convert $1 linuxlogo.png  //把bmp图片转换成png格式，下面过程和png格式图片相同
+pngtopnm linuxlogo.png > linuxlogo.pnm
+pnmquant 224 linuxlogo.pnm > linuxlogo224.pnm
+pnmtoplainpnm linuxlogo224.pnm > logo_linux_clut224.ppm
+rm -rf ./linuxlogo.pnm  ./linuxlogo224.pnm ./linuxlogo.png
+

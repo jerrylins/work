@@ -1,0 +1,117 @@
+#!/bin/sh
+VID=2207
+LOADERPID_30=300b
+LOADERPID_29=292c
+rkusb=$(lsusb | grep $VID)
+PID=${rkusb##B*:}
+
+# 1 is parameters right?
+if [ $# = "0" ]
+then
+    echo what do you want to do !!
+    exit
+fi
+# 2 is rockchip device is connect?
+if [  ${#rkusb} = 0 ]
+then
+    echo Please connect you device.
+    until lsusb | grep $VID  > /dev/null
+    do 
+        sleep 0.2
+        rkusb=$(lsusb | grep $VID)
+        PID=${rkusb##B*:}
+    done
+fi    
+
+# 3 devices to loader status
+case $PID in
+
+	$LOADERPID_30)
+		echo  Find a RockChip rk30  usb loader 
+			;;
+	$LOADERPID_29)
+		echo  Find a RockChip rk29  usb loader 
+		;;
+	*)
+		sleep 1
+		if  echo " " | sudo -S ~/bin/upgrade_tool SD
+		then
+			sleep 1 
+			#echo upgrade_tool switch device success!
+		elif adb reboot bootloader
+		then
+			echo adb reboot success!
+		else
+			echo bootloader fail!
+			exit
+		fi
+		;;
+esac
+
+#
+#if [ $PID = $LOADERPID ]
+#then
+#    echo  Find a RockChip usb loader 
+#else
+#    if  echo " " | sudo -S ~/bin/upgrade_tool SD
+#    then
+#       sleep 0.1 
+#
+#        #echo upgrade_tool switch device success!
+#    elif adb reboot bootloader
+#    then
+#        echo adb reboot success!
+#    else
+#        echo bootloader fail!
+#        exit
+#    fi
+#fi
+#
+until lsusb | grep $VID> /dev/null
+do
+    sleep 0.5
+done
+
+workdi=${PWD##/*/}
+if [ $workdi = "kernel" ]
+then
+    Image_path=../rockdev/Image
+    Kernel_path=.
+else
+    Image_path=rockdev/Image
+    Kernel_path=kernel
+fi
+
+for i in $*
+do
+    for m in $(seq ${#i})
+    do
+        cmd=$(echo "$i" | cut -b $m)
+        case $cmd in
+            k) 
+                 echo " " | sudo -S ~/bin/upgrade_tool di -k $Kernel_path/kernel.img $Kernel_path/../parameter
+                ;;
+            m)
+                 echo " " | sudo -S ~/bin/upgrade_tool di -m  $Image_path/misc.img $Kernel_path/../parameter
+                ;;
+            b)
+                 echo " " | sudo -S ~/bin/upgrade_tool di -b $Image_path/boot.img $Kernel_path/../parameter
+                ;;
+            s)
+                 echo " " | sudo -S ~/bin/upgrade_tool di -s  $Image_path/system.img $Kernel_path/../parameter
+                ;;
+            r)
+                 echo " " | sudo -S ~/bin/upgrade_tool di -r  $Image_path/recovery.img $Kernel_path/../parameter
+                ;;
+            -) 
+                ;;
+            *)
+                echo error parameters $cmd
+        esac
+
+    done
+done
+
+sleep 0.2
+echo " " | sudo -S ~/bin/upgrade_tool RD
+exit

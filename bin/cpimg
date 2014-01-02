@@ -1,0 +1,4 @@
+ #!/bin/sh
+rm ~/vmware/SharedVMs/Image/*.img
+cp rockdev/Image/*.img ~/vmware/SharedVMs/Image/ 
+cp kernel/kernel.img   ~/vmware/SharedVMs/Image/ 

@@ -1,0 +1,38 @@
+#! /bin/sh
+
+echo ${HOME:-notexit}
+echo ${HOME:=zhangyx}
+echo ${HOME:?zhangyx}
+echo ${HOME:+1}
+
+filename=${1:-/dev/ttyUSB0}
+echo $filename
+printf "the args is %s \n" "$*"
+printf "the args is %s \n" "$@"
+
+set -- Here we are
+echo there are $# parameters
+
+for i in $*
+do
+    echo i is $i
+done
+
+echo $?
+if adb reboot bootloader
+then
+    echo adb reboot success!
+elif ~/bin/upgrade_tool SD
+    echo upgrade_tool switch device success!
+else
+    echo bootloader fail!
+    exit
+fi
+sleep 1
+#echo "android" | sudo -S ~/bin/upgrade_tool di -k kernel/kernel.img parameter
+#sudo ~/bin/upgrade_tool di -b rockdev/Image/boot.img parameter
+#sudo ~/bin/upgrade_tool di -m  rockdev/Image/misc.img parameter
+#sudo ~/bin/upgrade_tool di -s  rockdev/Image/system.img parameter
+#sudo ~/bin/upgrade_tool di -r  rockdev/Image/recovery.img parameter
+#sleep 1
+#~/bin/upgrade_tool rd

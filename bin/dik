@@ -1,0 +1,29 @@
+#!/bin/sh
+VID=2207
+rkusb=$(lsusb | grep $VID)
+PID=${rkusb##B*:}
+make kernel.img -j4
+if [ $? -eq 0 ];
+then
+	echo " " | sudo -S ~/bin/upgrade_tool sd
+
+	sleep 2
+	until lsusb | grep $VID  > /dev/null
+	do 
+		sleep 0.2
+		rkusb=$(lsusb | grep $VID)
+		PID=${rkusb##B*:}
+	done
+
+	sleep 0.2
+	sudo ~/bin/upgrade_tool di -k kernel.img  ../parameter
+	#sudo ~/bin/upgrade_tool di -m ../rockdev/Image/misc.img  ../parameter 
+	#sudo ~/bin/upgrade_tool di -b ../rockdev/Image/boot.img  ../parameter
+	#sudo ~/bin/upgrade_tool di -r ../rockdev/Image/recovery.img  ../parameter
+	#sudo ~/bin/upgrade_tool di -s ../rockdev/Image/system.img  ../parameter 
+	sleep 0.2
+	sudo ~/bin/upgrade_tool rd
+else
+	sleep 0.2
+fi
+

@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/home/zhangyx/.vim'
+let g:netrw_dirhist_2='/home/zhangyx/.vim/syntax'
+let g:netrw_dirhist_3='/'
+let g:netrw_dirhist_4='/home/zhangyx/work/rk3066/kernel/drivers'
+let g:netrw_dirhist_5='/home/jone/work/rk3028a/.git'
+let g:netrw_dirhist_6='/home/jone/work/rk3028a/device/rockchip/rk30sdk/overlay/frameworks/base/core/res/res/values'
+let g:netrw_dirhist_7='/home/jone/work/rk3028a/kernel/drivers/media/video'
+let g:netrw_dirhist_8='/home/jone/work/rk3026v42/kernel/drivers/input/touchscreen'

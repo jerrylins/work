@@ -1,0 +1,13 @@
+#!/bin/sh
+
+rm kernel.img
+make kernel.img -j4  
+
+if [ ! -e kernel.img ]
+then
+    exit
+fi
+
+cp kernel.img  ~/vmware/Shared\ VMs/Image/ 
+di -k
+exit

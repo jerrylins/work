@@ -1,0 +1,12 @@
+#! /bin/sh
+
+
+printf "the args is %s \n" "$*"
+printf "the args is %s \n" "$@"
+
+set -- Here we are
+echo there are $# parameters
+
+pngtopnm logo.png > huisen-logo-linux.pnm    
+pnmquant 224 huisen-logo-linux.pnm > huisen-logo-linux224.pnm     
+pnmtoplainpnm huisen-logo-linux224.pnm > logo_linux_clut224.ppm

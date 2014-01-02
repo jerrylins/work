@@ -1,0 +1,2 @@
+#!/bin/bash
+git fetch zhangyx@172.168.1.237:/home/heromanwang/RK3168_RK3028_ANDROID4.2/.git/  +master:$1
